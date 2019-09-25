@@ -3,7 +3,12 @@ name = "actix_login"
 version = "0.1.0"
 authors = ["karth <karthickps.ai@gmail.com>"]
 edition = "2018"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+actix-web = "1.0.7"
+
+diesel = { version = "1.4.0", features = ["sqlite"] }
+dotenv = "0.10"
