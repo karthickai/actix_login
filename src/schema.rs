@@ -1,6 +1,5 @@
 table! {
-    users (id) {
-        id -> Nullable<Integer>,
+    users (username) {
         username -> Text,
         password -> Text,
     }
