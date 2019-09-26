@@ -54,6 +54,10 @@ fn main() -> std::io::Result<()> {
             )
             .service(web::resource("/login").route(web::post().to_async(auth_handler::login)))
             .service(web::resource("/logout").route(web::get().to(auth_handler::logout)))
+            .service(
+                web::resource("/update_password")
+                    .route(web::post().to_async(auth_handler::update_password)),
+            )
     })
     .bind("127.0.0.1:8080")
     .expect("Cannot bind to 127.0.0.1:8080")
