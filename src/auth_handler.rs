@@ -25,7 +25,7 @@ pub fn update_password(
             let user: SlimUser = serde_json::from_str(&identity).unwrap();
             id.forget();
             Either::A(
-                web::block(move || _query_update(user, auth_data.into_inner(), pool)).then(
+                web::block(move || query_update(user, auth_data.into_inner(), pool)).then(
                     move |res: Result<SlimUser, BlockingError<ServiceError>>| match res {
                         Ok(user) => {
                             let user_string = serde_json::to_string(&user).unwrap();
@@ -90,7 +90,7 @@ fn query(auth_data: User, pool: web::Data<Pool>) -> Result<SlimUser, ServiceErro
     Err(ServiceError::Unauthorized)
 }
 
-fn _query_update(
+fn query_update(
     auth_data: SlimUser,
     upwd: UpdatePassword,
     pool: web::Data<Pool>,
