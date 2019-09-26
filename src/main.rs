@@ -9,8 +9,8 @@ use actix_web::{middleware, web, App, HttpRequest, HttpResponse, HttpServer, Res
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
+mod auth_handler;
 mod errors;
-mod login_handler;
 mod models;
 mod register_handler;
 mod schema;
@@ -52,7 +52,8 @@ fn main() -> std::io::Result<()> {
                 web::resource("/register")
                     .route(web::post().to_async(register_handler::create_user)),
             )
-            .service(web::resource("/login").route(web::post().to_async(login_handler::login)))
+            .service(web::resource("/login").route(web::post().to_async(auth_handler::login)))
+            .service(web::resource("/logout").route(web::get().to(auth_handler::logout)))
     })
     .bind("127.0.0.1:8080")
     .expect("Cannot bind to 127.0.0.1:8080")

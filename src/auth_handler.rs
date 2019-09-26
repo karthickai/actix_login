@@ -8,6 +8,11 @@ use crate::utils::verify;
 
 use futures::Future;
 
+pub fn logout(id: Identity) -> HttpResponse {
+    id.forget();
+    HttpResponse::Ok().finish()
+}
+
 pub fn login(
     auth_data: web::Json<User>,
     id: Identity,
