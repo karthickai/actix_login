@@ -117,3 +117,4 @@ fn query_update(
     }
     Err(ServiceError::BadRequest("Username not exist !".into()))
 }
+
