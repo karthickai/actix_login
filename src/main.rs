@@ -10,6 +10,7 @@ use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
 mod errors;
+mod login_handler;
 mod models;
 mod register_handler;
 mod schema;
@@ -51,6 +52,7 @@ fn main() -> std::io::Result<()> {
                 web::resource("/register")
                     .route(web::post().to_async(register_handler::create_user)),
             )
+            .service(web::resource("/login").route(web::post().to_async(login_handler::login)))
     })
     .bind("127.0.0.1:8080")
     .expect("Cannot bind to 127.0.0.1:8080")
