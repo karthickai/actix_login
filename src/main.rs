@@ -3,6 +3,7 @@ extern crate actix_web;
 extern crate diesel;
 #[macro_use]
 extern crate serde_derive;
+extern crate easy_password;
 
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::{middleware, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
@@ -47,19 +48,31 @@ fn main() -> std::io::Result<()> {
                     .secure(false), // this can only be true if you have https
             ))
             .data(web::JsonConfig::default().limit(4096))
-            .service(web::resource("/ping").to(ping))
             .service(
-                web::resource("/register")
-                    .route(web::post().to_async(register_handler::create_user)),
-            )
-            .service(web::resource("/login").route(web::post().to_async(auth_handler::login)))
-            .service(web::resource("/logout").route(web::get().to(auth_handler::logout)))
-            .service(
-                web::resource("/update_password")
-                    .route(web::post().to_async(auth_handler::update_password)),
+                web::scope("/api")
+                    .service(web::resource("/ping").to(ping))
+                    .service(
+                        web::scope("/auth")
+                            .service(
+                                web::resource("/register")
+                                    .route(web::post().to_async(register_handler::create_user)),
+                            )
+                            .service(
+                                web::resource("/login")
+                                    .route(web::post().to_async(auth_handler::login)),
+                            )
+                            .service(
+                                web::resource("/logout").route(web::get().to(auth_handler::logout)),
+                            )
+                            .service(
+                                web::resource("/update_password")
+                                    .route(web::post().to_async(auth_handler::update_password)),
+                            ),
+                    ),
             )
     })
-    .bind("127.0.0.1:8080")
-    .expect("Cannot bind to 127.0.0.1:8080")
+    .bind("0.0.0.0:3003")
+    .expect("Cannot bind to 0.0.0.0:3003")
+    .workers(1)
     .run()
 }

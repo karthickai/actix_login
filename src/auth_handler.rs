@@ -4,7 +4,7 @@ use diesel::prelude::*;
 
 use crate::errors::ServiceError;
 use crate::models::{Pool, SlimUser, User};
-use crate::utils::{hash_password, verify};
+use crate::utils::{hash, verify};
 use futures::future::err;
 use futures::future::Either;
 use futures::Future;
@@ -104,7 +104,7 @@ fn query_update(
     if let Some(user) = items.pop() {
         if let Ok(matching) = verify(&user.password, &upwd.old_password) {
             if matching {
-                let hash_password: String = hash_password(&upwd.new_password)?;
+                let hash_password: String = hash(&upwd.new_password)?;
                 let _ = diesel::update(users.find(&auth_data.username))
                     .set(password.eq(hash_password))
                     .execute(conn)?;
@@ -117,4 +117,3 @@ fn query_update(
     }
     Err(ServiceError::BadRequest("Username not exist !".into()))
 }
-

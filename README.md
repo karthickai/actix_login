@@ -34,4 +34,5 @@ $ diesel migration run
 $ cargo check 
 $ cargo run 
 
+$ cargo build --target arm-unknown-linux-gnueabihf --release
 ```

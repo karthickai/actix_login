@@ -4,7 +4,7 @@ use diesel::prelude::*;
 
 use crate::errors::ServiceError;
 use crate::models::{Pool, SlimUser, User};
-use crate::utils::hash_password;
+use crate::utils::hash;
 
 use futures::Future;
 
@@ -36,7 +36,7 @@ fn query(auth_data: User, pool: web::Data<Pool>) -> Result<SlimUser, ServiceErro
         .filter(username.eq(&auth_data.username))
         .load::<User>(conn)?;
     if items.is_empty() {
-        let password: String = hash_password(&auth_data.password)?;
+        let password: String = hash(&auth_data.password)?;
         let new_user = User {
             username: auth_data.username,
             password,
