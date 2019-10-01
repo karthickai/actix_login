@@ -71,8 +71,8 @@ fn main() -> std::io::Result<()> {
                     ),
             )
     })
-    .bind("0.0.0.0:3003")
-    .expect("Cannot bind to 0.0.0.0:3003")
+    .bind("0.0.0.0:3000")
+    .expect("Cannot bind to 0.0.0.0:3000")
     .workers(1)
     .run()
 }
