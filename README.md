@@ -9,7 +9,7 @@ RUST, Actix, Login, Bcrypt, Diesel, SQLite
 - Register with username and password
 - Login with username and password.Get verified and receive auth cookie
 - Update password with auth cookie
-- Argonautica for password hashing
+- Bcrypt for password hashing
 - Sqlite3 embedded db for user database
 
 ### Crate Used
