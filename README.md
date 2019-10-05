@@ -36,7 +36,7 @@ $ diesel migration run
 $ cargo check 
 $ cargo run 
 
-For arm processor build
+# for arm processor build
 $ cargo build --target arm-unknown-linux-gnueabihf --release
 ```
 
