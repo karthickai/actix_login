@@ -27,9 +27,19 @@ RUST, Actix, Login, Bcrypt, Diesel, SQLite
 - [serde_json](https://crates.io/crates/serde_json) // A JSON serialization file format.
 - [serde_derive](https://crates.io/crates/serde_derive) // Macros 1.1 implementation of #[derive(Serialize, Deserialize)].
 
+## Requirement
+```
+# SQLite3 
+# Ubuntu
+$ sudo apt-get install libsqlite3-dev
+
+# windows use vcpkg to install sqlite3
+```
+
 ## Build and Run
 
 ```
+
 $ echo "DATABASE_URL=user.db" > .env
 $ diesel migration run
 
