@@ -22,7 +22,9 @@ pub fn create_user(
             }
             Err(err) => match err {
                 BlockingError::Error(service_error) => Err(service_error),
-                BlockingError::Canceled => Err(ServiceError::InternalServerError),
+                BlockingError::Canceled => {
+                    Err(ServiceError::InternalServerError)
+                },
             },
         },
     )

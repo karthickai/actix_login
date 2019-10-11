@@ -34,6 +34,8 @@ RUST, Actix, Login, Bcrypt, Diesel, SQLite
 $ sudo apt-get install libsqlite3-dev
 
 # windows use vcpkg to install sqlite3
+
+cargo install diesel_cli --no-default-features --features "sqlite-bundled"
 ```
 
 ## Build and Run
