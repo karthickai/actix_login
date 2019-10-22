@@ -5,8 +5,11 @@ extern crate diesel;
 extern crate serde_derive;
 extern crate easy_password;
 
+use actix_cors::Cors;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
-use actix_web::{middleware, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
+use actix_web::{
+    http::header, middleware, web, App, HttpRequest, HttpResponse, HttpServer, Responder,
+};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
@@ -48,6 +51,14 @@ fn main() -> std::io::Result<()> {
                     .secure(false), // this can only be true if you have https
             ))
             .data(web::JsonConfig::default().limit(4096))
+            .wrap(
+                Cors::new()
+                    .allowed_origin("http://192.168.0.109:8080")
+                    .send_wildcard()
+                    .allowed_headers(vec![header::AUTHORIZATION, header::CONTENT_TYPE])
+                    .max_age(3600),
+            )
+            .service(web::resource("/ping").to(ping))
             .service(
                 web::scope("/api")
                     .service(web::resource("/ping").to(ping))
@@ -71,8 +82,8 @@ fn main() -> std::io::Result<()> {
                     ),
             )
     })
-    .bind("0.0.0.0:3000")
-    .expect("Cannot bind to 0.0.0.0:3000")
+    .bind("0.0.0.0:8000")
+    .expect("Cannot bind to 0.0.0.0:8000")
     .workers(1)
     .run()
 }

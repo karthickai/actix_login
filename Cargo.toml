@@ -8,6 +8,7 @@ license = "MIT"
 [dependencies]
 actix-identity = "0.1.0"
 actix-web = "1.0.8"
+actix-cors = "0.1.0"
 chrono = { version = "0.4.6", features = ["serde"] }
 diesel = { version = "1.4.0", features = ["sqlite", "r2d2", "chrono"] }
 dotenv = "0.10"
