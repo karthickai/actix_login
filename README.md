@@ -11,6 +11,8 @@ RUST, Actix, Login, Bcrypt, Diesel, SQLite
 - Update password with auth cookie
 - Bcrypt for password hashing
 - Sqlite3 embedded db for user database
+- Cookie base authentication
+- CORS Enabled
 
 ### Crate Used
 
