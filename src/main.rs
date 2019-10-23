@@ -29,6 +29,7 @@ fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "actix_web=info,actix_server=info");
     env_logger::init();
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let address: String = std::env::var("ADDRESS").unwrap_or_else(|_| "http://localhost".to_string());
 
     // create db connection pool
     let manager = ConnectionManager::<SqliteConnection>::new(database_url);
@@ -53,7 +54,7 @@ fn main() -> std::io::Result<()> {
             .data(web::JsonConfig::default().limit(4096))
             .wrap(
                 Cors::new()
-                    .allowed_origin("http://192.168.0.109:8080")
+                    .allowed_origin(&address)
                     .send_wildcard()
                     .allowed_headers(vec![header::AUTHORIZATION, header::CONTENT_TYPE])
                     .max_age(3600),
